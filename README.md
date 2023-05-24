@@ -27,7 +27,6 @@
 
 <h1 align="center">
     :arrow_lower_right: please wait loading gif image :arrow_lower_left:
-    
      <br>
     <img src="https://github.com/ArturKondratev/Trade-Mobile/blob/main/Screen/gif1.gif?raw=true" width="250">
 </h1>
