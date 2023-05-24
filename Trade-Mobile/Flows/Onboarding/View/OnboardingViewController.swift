@@ -37,13 +37,21 @@ extension OnboardingViewController: OnboardingViewDelegate, OnboardingViewProtoc
     }
     
     //MARK: - OnboardingViewProtocol
-
     func updateProgress(progress: Float, progressState: Int) {
         onboardingView.progressView.setProgress(progress, animated: true)
         onboardingView.progressLable.text = progressState.description + "%"
     }
     
     func showData() {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if granted {
+                print("Разрешение получено.")
+            } else {
+                print("Разрешение не получено.")
+            }
+        }
+        
         onboardingView.progressView.isHidden = true
         onboardingView.progressLable.isHidden = true
         onboardingView.titleLable.isHidden = false

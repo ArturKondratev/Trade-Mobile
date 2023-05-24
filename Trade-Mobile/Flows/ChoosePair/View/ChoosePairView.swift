@@ -1,5 +1,5 @@
 //
-//  CoosePairView.swift
+//  ChoosePairView.swift
 //  Trade-Mobile
 //
 //  Created by Артур Кондратьев on 15.05.2023.
@@ -13,12 +13,14 @@ class ChoosePairView: UIView {
     private(set) var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 20
+        layout.minimumInteritemSpacing = 21
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
-        collectionView.register(CoosePairCell.self, forCellWithReuseIdentifier: CoosePairCell.reuseId)
+        collectionView.register(ChoosePairCell.self, forCellWithReuseIdentifier: ChoosePairCell.reuseId)
         return collectionView
     }()
     

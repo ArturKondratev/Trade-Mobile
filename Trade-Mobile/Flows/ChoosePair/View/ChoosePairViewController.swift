@@ -10,14 +10,14 @@ import UIKit
 class ChoosePairViewController: UIViewController, ChoosePairViewProtocol {
     
     var presenter: ChoosePairPresenterProtocol!
-    private var choosePairView: CoosePairView {
-        return self.view as! CoosePairView
+    private var choosePairView: ChoosePairView {
+        return self.view as! ChoosePairView
     }
     
     //MARK: - LifeCycle
     override func loadView() {
         super.loadView()
-        self.view = CoosePairView()
+        self.view = ChoosePairView()
     }
     
     override func viewDidLoad() {
@@ -26,6 +26,17 @@ class ChoosePairViewController: UIViewController, ChoosePairViewProtocol {
         choosePairView.collectionView.dataSource = self
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.barTintColor = .brandBackround
+        configNavBar()
+        presenter.viewDidLoad()
+    }
+    
+    //MARK: - Configure2
+    private func configNavBar() {
+        let lable = UILabel()
+        lable.text = "Currency pair"
+        lable.font = .boldSystemFont(ofSize: 22)
+        lable.textColor = .white
+        navigationItem.titleView = lable
     }
     
     //MARK: - Functions
@@ -41,10 +52,15 @@ extension ChoosePairViewController: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CoosePairCell.reuseId, for: indexPath) as? CoosePairCell else { return UICollectionViewCell() }
-        cell.configure(pair: presenter.pair[indexPath.row].name)
-        if indexPath.row == 1 {
-            cell.pairButton.backgroundColor = .brandGreen
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChoosePairCell.reuseId, for: indexPath) as? ChoosePairCell else { return UICollectionViewCell() }
+        
+        let pair = presenter.pair[indexPath.row]
+        cell.configure(pair: pair.name)
+        
+        if presenter.isSelectedPair != nil, pair.name == presenter.isSelectedPair?.name {
+            cell.backgroundColor = .brandGreen
+        } else if presenter.isSelectedPair == nil, indexPath.row == 0 {
+            cell.backgroundColor = .brandGreen
         }
         return cell
     }
@@ -56,8 +72,8 @@ extension ChoosePairViewController: UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width / 2 - 21,
-                      height: 74)
+        return CGSize(width: collectionView.frame.width / 2 - 14,
+                      height: 54)
     }
     
     func collectionView(_ collectionView: UICollectionView,

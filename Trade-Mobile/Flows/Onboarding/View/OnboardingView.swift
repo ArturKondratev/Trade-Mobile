@@ -23,7 +23,6 @@ class OnboardingView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .brandGreen
         view.layer.cornerRadius = cornerRadius
-        
         view.layer.shadowColor = UIColor.brandGreen.cgColor
         view.layer.shadowRadius = cornerRadius
         view.layer.shadowOpacity = 1.0
@@ -36,14 +35,13 @@ class OnboardingView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .brandRed
         view.layer.cornerRadius = cornerRadius
-        
         view.layer.shadowColor = UIColor.brandRed.cgColor
         view.layer.shadowRadius = cornerRadius
         view.layer.shadowOpacity = 1.0
         view.layer.shadowOffset = CGSize(width: 2.5, height: 2.5)
         return view
     }()
-        
+    
     lazy var blureView: UIView = {
         let blureView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterialDark))
         blureView.translatesAutoresizingMaskIntoConstraints = false
@@ -125,15 +123,15 @@ class OnboardingView: UIView {
         addSubview(progressLable)
         
         NSLayoutConstraint.activate([
-            greenBottomView.widthAnchor.constraint(equalToConstant: 123),
-            greenBottomView.heightAnchor.constraint(equalToConstant: 123),
-            greenBottomView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 193),
-            greenBottomView.rightAnchor.constraint(equalTo: rightAnchor, constant: -21),
+            greenBottomView.widthAnchor.constraint(equalToConstant: 140),
+            greenBottomView.heightAnchor.constraint(equalToConstant: 140),
+            greenBottomView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20),
+            greenBottomView.bottomAnchor.constraint(equalTo: centerYAnchor, constant: -80),
             
-            redBottomView.widthAnchor.constraint(equalToConstant: 123),
-            redBottomView.heightAnchor.constraint(equalToConstant: 123),
-            redBottomView.topAnchor.constraint(equalTo: greenBottomView.bottomAnchor, constant: 88),
-            redBottomView.leftAnchor.constraint(equalTo: leftAnchor, constant: 21),
+            redBottomView.widthAnchor.constraint(equalToConstant: 140),
+            redBottomView.heightAnchor.constraint(equalToConstant: 140),
+            redBottomView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
+            redBottomView.topAnchor.constraint(equalTo: centerYAnchor, constant: 80),
             
             blureView.topAnchor.constraint(equalTo: topAnchor),
             blureView.bottomAnchor.constraint(equalTo: bottomAnchor),

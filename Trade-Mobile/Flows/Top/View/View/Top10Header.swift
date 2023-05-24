@@ -12,7 +12,31 @@ class Top10Header: UITableViewHeaderFooterView {
     static let identifier = "Top10Header"
     
     // MARK: - SubView
-    lazy var greyBottomView: UIView = {
+    lazy var number = makeLable(text: "№")
+    lazy var country = makeLable(text: "Сountry")
+    lazy var name = makeLable(text: "Name")
+    
+    lazy var deposit: UILabel = {
+        let lable = UILabel()
+        lable.translatesAutoresizingMaskIntoConstraints = false
+        lable.font = UIFont.boldSystemFont(ofSize: 12)
+        lable.textColor = .systemGray
+        lable.textAlignment = .right
+        lable.text = "Deposit"
+        return lable
+    }()
+    
+    lazy var profit: UILabel = {
+        let lable = UILabel()
+        lable.translatesAutoresizingMaskIntoConstraints = false
+        lable.font = UIFont.boldSystemFont(ofSize: 12)
+        lable.textColor = .systemGray
+        lable.textAlignment = .right
+        lable.text = "Profit"
+        return lable
+    }()
+    
+    lazy var bottomGreyView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .brandGrey
@@ -21,12 +45,6 @@ class Top10Header: UITableViewHeaderFooterView {
         view.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
         return view
     }()
-    
-    lazy var number = makeLable(text: "№")
-    lazy var country = makeLable(text: "Сountry")
-    lazy var name = makeLable(text: "Name")
-    lazy var deposit = makeLable(text: "Deposit")
-    lazy var profit = makeLable(text: "Profit")
     
     lazy var stackView: UIStackView = {
         let stackView = UIStackView()
@@ -38,12 +56,13 @@ class Top10Header: UITableViewHeaderFooterView {
         return stackView
     }()
     
+    //MARK: - Function
     private func makeLable(text: String) -> UILabel {
         let lable = UILabel()
         lable.translatesAutoresizingMaskIntoConstraints = false
         lable.text = text
         lable.font = UIFont.boldSystemFont(ofSize: 12)
-        lable.textColor = .systemGray2
+        lable.textColor = .systemGray
         return lable
     }
     
@@ -60,9 +79,10 @@ class Top10Header: UITableViewHeaderFooterView {
     
     // MARK: - UI
     private func setUI() {
-        backgroundColor = .clear
-        addSubview(greyBottomView)
+        contentView.backgroundColor = .brandBackround
+        addSubview(bottomGreyView)
         addSubview(stackView)
+        
         stackView.addArrangedSubview(number)
         stackView.addArrangedSubview(country)
         stackView.addArrangedSubview(name)
@@ -70,10 +90,10 @@ class Top10Header: UITableViewHeaderFooterView {
         stackView.addArrangedSubview(profit)
         
         NSLayoutConstraint.activate([
-            greyBottomView.topAnchor.constraint(equalTo: topAnchor),
-            greyBottomView.leftAnchor.constraint(equalTo: leftAnchor),
-            greyBottomView.rightAnchor.constraint(equalTo: rightAnchor),
-            greyBottomView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            bottomGreyView.topAnchor.constraint(equalTo: topAnchor),
+            bottomGreyView.leftAnchor.constraint(equalTo: leftAnchor),
+            bottomGreyView.rightAnchor.constraint(equalTo: rightAnchor),
+            bottomGreyView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 8),

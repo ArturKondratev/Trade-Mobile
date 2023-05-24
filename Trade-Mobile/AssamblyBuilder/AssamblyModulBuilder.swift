@@ -1,5 +1,5 @@
 //
-//  AppBuilder.swift
+//  AssamblyModulBuilder.swift
 //  Trade-Mobile
 //
 //  Created by Артур Кондратьев on 13.05.2023.
@@ -8,51 +8,53 @@
 import UIKit
 
 protocol AssamblyBuilderProtocol {
-    
+    func craeteOnboardingModul(router: RouterProtocol) -> UIViewController
+    func createTraidingModul(router: RouterProtocol) -> UITabBarController
+    func createCoosePairModul(router: RouterProtocol) -> UIViewController
 }
 
-class AssamblyModulBuilder {
+class AssamblyModulBuilder: AssamblyBuilderProtocol {
     
-    var navigatinController: UINavigationController
-  
-    init(navigetinController: UINavigationController) {
-        self.navigatinController = navigetinController
+    func craeteOnboardingModul(router: RouterProtocol) -> UIViewController {
+        let view = OnboardingViewController()
+        let presenter = OnboardingPresenter(view: view, router: router)
+        view.presenter = presenter
+        return view
     }
     
-    func startApp(){
-        if UserDefaults.standard.bool(forKey: "IsLogin" ) {
-            goToTrade()
-        } else {
-            goToOnboarding()
-        }
-    }
-    
-    func goToOnboarding() {
-        let vc = OnboardingBuilder.createModul(coordinator: self)
-        navigatinController.pushViewController(vc, animated: true)
-    }
-    
-    func goToTrade() {
+    func createTraidingModul(router: RouterProtocol) -> UITabBarController {
         let tabBarVC = UITabBarController()
         tabBarVC.tabBar.backgroundColor = .brandTabBar
         tabBarVC.tabBar.barTintColor = .brandTabBar
         tabBarVC.tabBar.tintColor = .brandGreen
         
-        let tradeVC = UINavigationController(rootViewController: TradeViewController())
-        tradeVC.title = "Trade"
+        let tradeVC = TradeViewController()
+        let tradePresenter = TradeViewPresenter(view: tradeVC, router: router)
+        tradeVC.presenter = tradePresenter
+        let tradeNavControl = UINavigationController(rootViewController: tradeVC)
         
-        let topVC = UINavigationController(rootViewController: Top10Builder.build())
-        topVC.title = "Top"
-
-        tabBarVC.setViewControllers([tradeVC, topVC], animated: true)
+        let topVC = TopViewController()
+        let topPresenter = TopPresenter(view: topVC, router: router)
+        topVC.presenter = topPresenter
+        let topNavControl = UINavigationController(rootViewController: topVC)
+        topNavControl.navigationBar.barTintColor = .brandBackround
         
-        let images = ["trade", "top"]
+        tabBarVC.setViewControllers([tradeNavControl, topNavControl], animated: true)
+        
+        let images = ["Trade", "Top"]
         if let items = tabBarVC.tabBar.items {
             for x in 0..<items.count {
                 items[x].image = UIImage(named: images[x])
+                tabBarVC.viewControllers?[x].title = images[x]
             }
         }
-        navigatinController.pushViewController(tabBarVC, animated: true)
-        navigatinController.navigationBar.isHidden = true
+        return tabBarVC
+    }
+    
+    func createCoosePairModul(router: RouterProtocol) -> UIViewController {
+        let view = ChoosePairViewController()
+        let presenter = ChoosePairPresenter(view: view, router: router)
+        view.presenter = presenter
+        return view
     }
 }

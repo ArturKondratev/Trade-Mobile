@@ -21,9 +21,17 @@ class Top10ViewCell: UITableViewCell {
         return image
     }()
     
-    lazy var number = makeLable(text: "№")
-    lazy var name = makeLable(text: "$336755")
-    lazy var deposit = makeLable(text: "$336755")
+    lazy var number = makeLable(text: "№", color: .white)
+    lazy var name = makeLable(text: "$336755", color: .white)
+    
+    lazy var deposit: UILabel = {
+        let lable = UILabel()
+        lable.translatesAutoresizingMaskIntoConstraints = false
+        lable.font = UIFont.boldSystemFont(ofSize: 14)
+        lable.textColor = .white
+        lable.textAlignment = .right
+        return lable
+    }()
     
     lazy var profit: UILabel = {
         let lable = UILabel()
@@ -41,7 +49,7 @@ class Top10ViewCell: UITableViewCell {
         stackView.axis = .horizontal
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
-        stackView.spacing = 5.0
+        stackView.spacing = 10.0
         return stackView
     }()
     
@@ -57,10 +65,11 @@ class Top10ViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        //        deviceImage.image = nil
-        //        deviceName.text = nil
-        //        deviceCost.text = nil
-        //        deviceCount.text = nil
+        countryImage.image = nil
+        number.text = nil
+        name.text = nil
+        deposit.text = nil
+        profit.text = nil
     }
     
     func configure(trader: Trader) {
@@ -68,6 +77,12 @@ class Top10ViewCell: UITableViewCell {
         deposit.text = "$" + trader.deposit.description
         profit.text = "$" + trader.profit.description
         countryImage.image = UIImage(named: trader.country)
+    }
+    
+    func cofigureContentView() {
+        clipsToBounds = true
+        layer.cornerRadius = 10
+        layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
     }
     
     //MARK: - UI
@@ -93,12 +108,13 @@ class Top10ViewCell: UITableViewCell {
 }
 
 private extension Top10ViewCell {
-    private func makeLable(text: String) -> UILabel {
+    private func makeLable(text: String, color: UIColor) -> UILabel {
         let lable = UILabel()
         lable.translatesAutoresizingMaskIntoConstraints = false
         lable.text = text
         lable.font = UIFont.boldSystemFont(ofSize: 14)
-        lable.textColor = .systemGray2
+        lable.textColor = color
         return lable
     }
 }
+

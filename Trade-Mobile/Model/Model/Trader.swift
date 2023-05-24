@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct Trader {
+    let country: String
+    let name: String
+    var deposit: Int
+    var profit: Int
+}

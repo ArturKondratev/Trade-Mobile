@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+enum KeyConstants {
+    static let isLogin = "isLogin"
+    static let pair = "pair"
+}

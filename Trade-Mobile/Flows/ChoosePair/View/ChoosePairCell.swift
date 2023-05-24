@@ -1,5 +1,5 @@
 //
-//  CoosePairCell.swift
+//  ChoosePairCell.swift
 //  Trade-Mobile
 //
 //  Created by Артур Кондратьев on 15.05.2023.
@@ -12,16 +12,12 @@ class ChoosePairCell: UICollectionViewCell {
     static let reuseId = "CurrencyPairCell"
     
     //MARK: - SubViews
-    lazy var pairButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .brandGrey
-        button.tintColor = .white
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.setTitle("123", for: .normal)
-        button.clipsToBounds = true
-        button.layer.cornerRadius = 12
-        return button
+    lazy var pairlabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        return label
     }()
     
     //MARK: - Init
@@ -36,24 +32,25 @@ class ChoosePairCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        pairButton.backgroundColor = .brandGrey
-        pairButton.setTitle(nil, for: .normal)
+        pairlabel.text = nil
+        backgroundColor = .brandGrey
     }
     
     //MARK: - Configure
     func configure(pair: String) {
-        pairButton.setTitle(pair, for: .normal)
+        pairlabel.text = pair
     }
     
     //MARK: - UI
     func setUI() {
-        backgroundColor = .clear
-        contentView.addSubview(pairButton)
+        contentView.addSubview(pairlabel)
+        backgroundColor = .brandGrey
+        layer.cornerRadius = 12
+        clipsToBounds = true
+        
         NSLayoutConstraint.activate([
-            pairButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            pairButton.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            pairButton.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            pairButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
+            pairlabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            pairlabel.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
 }

@@ -9,7 +9,8 @@ import UIKit
 import WebKit
 
 protocol TradeViewActionProtocol: AnyObject {
-    func pairButtonAction()
+    func didTabPairButton()
+    func didTabSellBuyButton()
 }
 
 class TradeView: UIView {
@@ -41,11 +42,11 @@ class TradeView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         label.textAlignment = .center
-        label.text = "10,000$"
+        // label.text = "10,000$"
         label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
-
+    
     lazy var webView: WKWebView = {
         let webView = WKWebView()
         webView.translatesAutoresizingMaskIntoConstraints = false
@@ -58,8 +59,6 @@ class TradeView: UIView {
         button.backgroundColor = .brandGrey
         button.layer.cornerRadius = 12
         button.clipsToBounds = true
-   //     button.setTitle("GPB/USD", for: .normal)
-   //     button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.tintColor = .white
         button.addTarget(self, action: #selector(pairButtonAction), for: .touchUpInside)
         
@@ -67,23 +66,18 @@ class TradeView: UIView {
         config.image = UIImage(systemName: "chevron.right",
                                withConfiguration: UIImage.SymbolConfiguration(scale: .large))
         config.imagePlacement = .trailing
-        config.imagePadding = 200.0
-        
-       // config.title = "GPB/USD"
+        config.imagePadding = 150.0
         config.titleAlignment = .center
         config.baseBackgroundColor = .brandGrey
         config.baseForegroundColor = .white
-       // config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
-        
         button.configuration = config
         
         let attributedText = NSMutableAttributedString(string: "GPB/USD", attributes: [
-               NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16),
-               NSAttributedString.Key.foregroundColor: UIColor.white,
-               NSAttributedString.Key.kern: 1
-               ])
-           button.setAttributedTitle(attributedText, for: .normal)
-        
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16),
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.kern: 1
+        ])
+        button.setAttributedTitle(attributedText, for: .normal)
         return button
     }()
     
@@ -108,7 +102,7 @@ class TradeView: UIView {
         button.setTitle("SELL", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         button.tintColor = .white
-    //    button.addTarget(self, action: #selector(pairButtonAction), for: .touchUpInside)
+        button.addTarget(self, action: #selector(sellBuyButtonAction), for: .touchUpInside)
         return button
     }()
     
@@ -121,7 +115,7 @@ class TradeView: UIView {
         button.setTitle("BUY", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         button.tintColor = .white
-      //  button.addTarget(self, action: #selector(pairButtonAction), for: .touchUpInside)
+        button.addTarget(self, action: #selector(sellBuyButtonAction), for: .touchUpInside)
         return button
     }()
     
@@ -171,7 +165,10 @@ class TradeView: UIView {
     
     //MARK: - Action
     @objc func pairButtonAction() {
-        delegate?.pairButtonAction()
+        delegate?.didTabPairButton()
+    }
+    @objc func sellBuyButtonAction() {
+        delegate?.didTabSellBuyButton()
     }
     
     // MARK: - UI
@@ -181,7 +178,7 @@ class TradeView: UIView {
         addSubview(balanceLable)
         addSubview(depositLable)
         addSubview(webView)
-
+        
         addSubview(firstStackView)
         firstStackView.addArrangedSubview(timerView)
         firstStackView.addArrangedSubview(investmentView)
@@ -220,8 +217,7 @@ class TradeView: UIView {
             thirdStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -30),
             
             pairButton.widthAnchor.constraint(equalToConstant: thirdStackView.frame.width),
-            pairButton.heightAnchor.constraint(equalToConstant: 54),
-            
+            pairButton.heightAnchor.constraint(equalToConstant: 54)
         ])
     }
 }

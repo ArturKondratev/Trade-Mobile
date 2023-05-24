@@ -32,7 +32,7 @@ class InvestmentView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         label.textAlignment = .center
-        label.text = "1,000$"
+        label.text = "1,000"
         label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
